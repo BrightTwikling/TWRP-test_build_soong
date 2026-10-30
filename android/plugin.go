@@ -70,10 +70,11 @@ var allowedPluginsByName = map[string]bool{
 	"vintf-compatibility-matrix-soong-rules": true,
 	"xsdc-soong-rules":                       true,
 	"xtensa":                                 true,
-	"soong-libaosprecovery_defaults":	  true,
-	"soong-libguitwrp_defaults":		  true,
-	"soong-libminuitwrp_defaults":		  true,
-	"soong-vold_defaults":			  true,
+	"soong-twrp_recovery_defaults":	          true,
+	"soong-libtwrpgui_defaults":              true,
+	"soong-libtwrpminui_defaults":            true,
+	"soong-libtar_defaults":                  true,
+	"soong-vold_defaults":                    true,
 }
 
 var internalPluginsPaths = []string{
