@@ -88,6 +88,7 @@ func RegisterPrebuiltEtcBuildComponents(ctx android.RegistrationContext) {
 	ctx.RegisterModuleType("prebuilt_optee", PrebuiltOpteeFactory)
 	ctx.RegisterModuleType("prebuilt_tvconfig", PrebuiltTvConfigFactory)
 	ctx.RegisterModuleType("prebuilt_vendor", PrebuiltVendorFactory)
+	ctx.RegisterModuleType("prebuilt_recovery_vendor", PrebuiltRecoveryVendorFactory)
 	ctx.RegisterModuleType("prebuilt_sbin", PrebuiltSbinFactory)
 	ctx.RegisterModuleType("prebuilt_system", PrebuiltSystemFactory)
 	ctx.RegisterModuleType("prebuilt_first_stage_ramdisk", PrebuiltFirstStageRamdiskFactory)
@@ -1134,6 +1135,16 @@ func PrebuiltVendorFactory() android.Module {
 	android.InitAndroidArchModule(module, android.DeviceSupported, android.MultilibCommon)
 	android.InitDefaultableModule(module)
 	return module
+}
+
+// prebuilt_recovery_vendor installs files in <partition>/vendor directory
+// for recovery image.
+func PrebuiltRecoveryVendorFactory() android.Module {
+    module := &PrebuiltEtc{}
+    InitPrebuiltEtcModule(module, "vendor")
+    android.InitAndroidArchModule(module, android.DeviceSupported, android.MultilibCommon)
+    android.InitDefaultableModule(module)
+    return module
 }
 
 // prebuilt_vendor_overlay is for a prebuilt artifact in <partition>/vendor_overlay directory.
