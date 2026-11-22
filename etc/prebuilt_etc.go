@@ -89,6 +89,7 @@ func RegisterPrebuiltEtcBuildComponents(ctx android.RegistrationContext) {
 	ctx.RegisterModuleType("prebuilt_tvconfig", PrebuiltTvConfigFactory)
 	ctx.RegisterModuleType("prebuilt_vendor", PrebuiltVendorFactory)
 	ctx.RegisterModuleType("prebuilt_recovery_vendor", PrebuiltRecoveryVendorFactory)
+	ctx.RegisterModuleType("prebuilt_recovery_vendor_root", PrebuiltRecoveryVendorRootFactory)
 	ctx.RegisterModuleType("prebuilt_sbin", PrebuiltSbinFactory)
 	ctx.RegisterModuleType("prebuilt_system", PrebuiltSystemFactory)
 	ctx.RegisterModuleType("prebuilt_first_stage_ramdisk", PrebuiltFirstStageRamdiskFactory)
@@ -1142,6 +1143,20 @@ func PrebuiltVendorFactory() android.Module {
 func PrebuiltRecoveryVendorFactory() android.Module {
     module := &PrebuiltEtc{}
     InitPrebuiltEtcModule(module, "vendor")
+    android.InitAndroidArchModule(module, android.DeviceSupported, android.MultilibCommon)
+    android.InitDefaultableModule(module)
+    return module
+}
+
+// prebuilt_recovery_vendor_root installs files directly under
+// recovery/root/vendor/ instead of recovery/root/system/vendor/.
+func PrebuiltRecoveryVendorRootFactory() android.Module {
+    module := &PrebuiltEtc{}
+    InitPrebuiltEtcModule(module, "vendor")
+
+    // Install directly under recovery/root/.
+    module.rootProperties.Install_in_root = proptools.BoolPtr(true)
+
     android.InitAndroidArchModule(module, android.DeviceSupported, android.MultilibCommon)
     android.InitDefaultableModule(module)
     return module
